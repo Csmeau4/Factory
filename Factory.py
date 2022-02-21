@@ -49,8 +49,7 @@ def factory():
         Task("Machine 2", 3,  5,  "Wheel   +1",   0,  5,  1,  0))
 
     runtask = 0
-    while runtime < 120:
-        time.sleep(0.5)
+    while runtime < 240:
 
 
         """
@@ -80,14 +79,21 @@ def factory():
                 runnable.append(taskindex)
             taskindex += 1
 
-        #Si une seule tâche possible, run celle là
+        #TACHE QUI VA ETRE RUN
         wait = False
+        
+        #PRIORITE ABSOLUE A LA PRODUCTION DE ROUES
         if 3 in runnable:
             runtask = 3
+            
+        #SI LES POMPES PEUVENT RUN, ON RUN. PRIORITE A LA POMPE 2, PLUS CONTRAIGNANTE
         elif 0 in runnable or 1 in runnable:
             runtask = runnable[0]
+            
+        #SI UNE SEULE TÂCHE DISPO, RUN. MOTEUR UNIQUEMENT SI IL EST EN PENURIE
         elif runnable.__len__() == 1 and engine == 0:
             runtask = runnable[0]
+        #SINON, ON NE RUN RIEN ET ON ATTEND LA PROCHAINE SECONDE
         else:
             runtask = -1
             wait = True
